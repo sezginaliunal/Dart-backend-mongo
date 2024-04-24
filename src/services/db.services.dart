@@ -1,12 +1,12 @@
 import 'package:mongo_dart/mongo_dart.dart';
 
+import '../constants/collections.dart';
 import '../init/load.env.dart';
 
 class DbService {
   static final DbService _instance = DbService._internal();
   late final Db _db;
   Db get db => _db;
-
   factory DbService() {
     return _instance;
   }
@@ -19,6 +19,8 @@ class DbService {
 
   Future<void> openDb() async {
     await _db.open();
+    print("Db açıldı $db");
+    createAllColl();
   }
 
   DbCollection getStore(String store) {
@@ -27,6 +29,16 @@ class DbService {
     }
     final collection = _db.collection(store);
     return collection;
+  }
+
+  Future<void> createAllColl() async {
+    final collNames = await db.getCollectionNames();
+
+    for (String collName in CollectionNames.collectionsToCreate) {
+      if (!collNames.contains(collName)) {
+        await db.createCollection(collName);
+      }
+    }
   }
 
   @override

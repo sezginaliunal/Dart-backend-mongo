@@ -2,16 +2,16 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 import '../../utils/extensions/hash.dart';
 
-class ReqUser {
+class User {
   ObjectId? id;
   final String? username;
   final String? email;
   final String? password;
 
-  ReqUser(this.username, this.password, this.email, {this.id});
+  User(this.username, this.password, this.email, {this.id});
 
-  factory ReqUser.fromJson(Map<String, dynamic> json) {
-    return ReqUser(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       json['username'] ?? '',
       json['password'] ?? '',
       json['email'] ?? '',
@@ -26,8 +26,7 @@ class ReqUser {
       'username': username ?? '',
       'email': email ?? '',
       'password': password?.hashString() ?? '',
-      // ignore: deprecated_member_use
-      '_id': id?.toHexString() ?? '',
+      '_id': ObjectId(),
     };
   }
 }

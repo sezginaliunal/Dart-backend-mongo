@@ -17,5 +17,10 @@ class CustomResponse {
     return Response.unauthorized(json.encode(body),
         headers: CustomHeader.json.getType);
   }
+
+  static Response notFound(dynamic body) {
+    return Response.notFound(json.encode(body),
+        headers: CustomHeader.json.getType);
+  }
   // Diğer yanıt türleri de buraya eklenebilir
 }

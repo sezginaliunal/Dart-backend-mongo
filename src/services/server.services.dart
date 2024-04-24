@@ -4,6 +4,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../middleware/router.middleware.dart';
 import 'auth.services.dart';
 
 class ServerService {
@@ -21,8 +22,10 @@ class ServerService {
 
   // Sunucuya bağlan
   Future<void> openServer() async {
-    final handler =
-        const Pipeline().addMiddleware(logRequests()).addHandler(_router.call);
+    final handler = const Pipeline()
+        .addMiddleware(logRequests())
+        .addMiddleware(handleNotFound()) // 404 middleware'ini ekle
+        .addHandler(_router.call);
 
     try {
       await serve(handler, InternetAddress.anyIPv4, 8080);
