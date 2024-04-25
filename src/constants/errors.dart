@@ -8,4 +8,6 @@ class ErrorMessages {
   String get emptyRequest => "Request body is empty or invalid";
   String get mustBeFilled => "All fields must be filled";
   String get passLongError => "Password must be at least 8 characters long";
+  String get internalServerError => "Internal Server Error";
+  String get invalidObjectId => "Invalid object id";
 }

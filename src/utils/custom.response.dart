@@ -33,11 +33,21 @@ class CustomResponse {
 
   static Response notFound(String errorMsg) {
     return Response.notFound(
-        json.encode(json.encode({
+        json.encode({
           "code": HttpStatus.notFound,
           "success": false,
           "error": errorMsg,
-        })),
+        }),
+        headers: CustomHeader.json.getType);
+  }
+
+  static Response internalServerError(String errorMsg) {
+    return Response.internalServerError(
+        body: json.encode({
+          "code": HttpStatus.internalServerError,
+          "success": false,
+          "error": errorMsg,
+        }),
         headers: CustomHeader.json.getType);
   }
   // Diğer yanıt türleri de buraya eklenebilir
